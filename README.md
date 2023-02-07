@@ -4,11 +4,11 @@
 
 
 API Rest criada para o gerenciamento de pessoas.   
-Foi desenvolvido em Java utilizando Spring Boot e aplicando o que aprendi sobre os conceitos Rest/Restful, Spring, Lombok, JPA e Hibernate no Bootcamp Spread Java Developer da Digital Innovation One.   
+Foi desenvolvido em **Java** utilizando **Spring Boot** e aplicando o que aprendi sobre os conceitos **Rest/Restful, Spring, Lombok, JPA** e **Hibernate** no Bootcamp Spread Java Developer da Digital Innovation One.   
 
 ## Etapas de Desenvolvimento
 
-* Setup inicial do projeto com o Spring Boot Initialzr 
+* Setup inicial do projeto com o **Spring Boot Initialzr** 
 * Criação de modelo de dados para o mapeamento de entidades em bancos de dados
 * Desenvolvimento de operações de gerenciamento de usuários (Cadastro, leitura, atualização e remoção de pessoas de um sistema).
 * Desenvolvimento de testes unitários para validação das funcionalidades
