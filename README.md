@@ -1,5 +1,5 @@
 <h1 align="center">
-   PersonAPI
+   People_Management-API
 </h1>
 
 
