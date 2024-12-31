@@ -1,32 +1,206 @@
 <h1 align="center">
-   People_Management-API
+   People Management API
 </h1>
 
 
-API Rest criada para o gerenciamento de pessoas.   
-Foi desenvolvido em **Java** utilizando **Spring Boot** e aplicando o que aprendi sobre os conceitos **Rest/Restful, Spring, Lombok, JPA** e **Hibernate** no Bootcamp Spread Java Developer da Digital Innovation One.   
+Este projeto é uma API RESTful desenvolvida em **Java** com **Spring Boot** para gerenciar informações de pessoas. Ele permite criar, listar, atualizar e excluir registros de pessoas, bem como realizar a busca por ID.   
 
-## Etapas de Desenvolvimento
+## Estrutura do Projeto   
 
-* Setup inicial do projeto com o **Spring Boot Initialzr** 
-* Criação de modelo de dados para o mapeamento de entidades em bancos de dados
-* Desenvolvimento de operações de gerenciamento de usuários (Cadastro, leitura, atualização e remoção de pessoas de um sistema).
-* Desenvolvimento de testes unitários para validação das funcionalidades
+O projeto é organizado da seguinte forma:   
 
-Para executar o projeto no terminal, digite o seguinte comando:
+```   
+personapi/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── one/
+│   │   │   │   └── digitalInnovation/
+│   │   │   │       └── personapi/
+│   │   │   │           ├── controller/        # Controladores REST
+│   │   │   │           │   ├── PersonController.java
+│   │   │   │           │   └── PersonControllerDocs.java
+│   │   │   │           ├── dto/               # Data Transfer Objects
+│   │   │   │           │   ├── request/
+│   │   │   │           │   │   ├── PersonDTO.java
+│   │   │   │           │   │   └── PhoneDTO.java
+│   │   │   │           │   └── response/
+│   │   │   │           │       └── MessageResponseDTO.java
+│   │   │   │           ├── entity/            # Entidades JPA
+│   │   │   │           │   ├── Person.java
+│   │   │   │           │   └── Phone.java
+│   │   │   │           ├── exception/         # Exceções personalizadas
+│   │   │   │           │   └── PersonNotFoundException.java
+│   │   │   │           ├── mapper/            # Mapeadores
+│   │   │   │           │   └── PersonMapper.java
+│   │   │   │           ├── repository/        # Repositórios JPA
+│   │   │   │           │   └── PersonRepository.java
+│   │   │   │           ├── service/           # Serviços
+│   │   │   │           │   └── PersonService.java
+│   │   ├── resources/    # Arquivos de configuração
+│   │   │   └── application.properties
+├── pom.xml               # Arquivo de configuração do Maven
+```   
 
-```shell script
-mvn spring-boot:run 
-```
+## Descrição   
 
-Após executar o comando acima, basta apenas abrir o seguinte endereço e visualizar a execução do projeto:
+O **People Management API** permite que você interaja com um banco de dados de pessoas, realizando operações CRUD (Criar, Ler, Atualizar, Deletar) . A aplicação é construída com o **Spring Boot**, utilizando **JPA** para persistência de dados e **H2** para o banco de dados em memória.   
 
-```
-http://localhost:8080/api/v1/people
-```
-## Requisitos para executar o projeto
+## Funcionalidades   
 
-* Java 11 ou versões superiores.
-* Maven 3.6.3 ou versões superiores.
-* Intellj IDEA Community Edition ou sua IDE favorita.
-* Controle de versão GIT instalado na sua máquina.
+- **Criar pessoa**: Permite adicionar uma nova pessoa ao banco de dados.
+- **Listar todas as pessoas**: Retorna uma lista de todas as pessoas registradas.
+- **Buscar por ID**: Permite buscar uma pessoa pelo seu ID.
+- **Atualizar pessoa**: Permite atualizar as informações de uma pessoa existente.
+- **Excluir pessoa**: Permite excluir uma pessoa do banco de dados.   
+
+## Endpoints   
+
+**1. Criar uma pessoa**   
+- **POST** /person   
+- Corpo da requisição:   
+
+```   
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "cpf": "12345678901",
+    "birthDate": "1990-01-01",
+    "phones": [
+        {
+            "type": "MOBILE",
+            "number": "987654321"
+        }
+    ]
+}
+```   
+
+- Resposta:   
+
+```   
+{
+    "message": "Created person with ID 1"
+}
+```   
+
+**2. Listar todas as pessoas   
+- **GET** /person   
+- Resposta:   
+
+```   
+[
+    {
+        "id": 1,
+        "firstName": "John",
+        "lastName": "Doe",
+        "cpf": "12345678901",
+        "birthDate": "1990-01-01",
+        "phones": [
+            {
+                "type": "MOBILE",
+                "number": "987654321"
+            }
+        ]
+    }
+]
+```   
+
+**3. Buscar pessoa por ID**   
+- **GET** /person/{id}   
+- Resposta:   
+
+```   
+{
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "cpf": "12345678901",
+    "birthDate": "1990-01-01",
+    "phones": [
+        {
+            "type": "MOBILE",
+            "number": "987654321"
+        }
+    ]
+}
+```   
+
+**4. Atualizar uma pessoa**   
+- **PUT** /person/{id}   
+- Corpo da requisição:   
+
+```   
+{
+    "firstName": "John",
+    "lastName": "Doe Updated",
+    "cpf": "12345678901",
+    "birthDate": "1990-01-01",
+    "phones": [
+        {
+            "type": "MOBILE",
+            "number": "987654322"
+        }
+    ]
+}
+```   
+- Resposta:   
+
+```   
+{
+    "message": "Updated person with ID 1"
+}
+```   
+
+**5. Excluir uma pessoa**   
+- **DELETE** /person/{id}   
+- Resposta:   
+
+```   
+{
+    "message": "Person with ID 1 deleted"
+}
+```   
+
+## Tecnologias Utilizadas   
+
+- **Java 11**: Linguagem de programação utilizada para o desenvolvimento da API.
+- **Spring Boot 2.7.1**: Framework utilizado para criação da API RESTful.
+- **H2 Database**: Banco de dados em memória utilizado para desenvolvimento e testes.
+- **Spring Data JPA**: Para interações com o banco de dados utilizando JPA (Java Persistence API).
+- **Lombok**: Biblioteca que reduz o boilerplate code (como getters, setters, constructors).
+- **MapStruct**: Biblioteca para mapeamento entre objetos (como DTOs e entidades).
+
+
+## Como Rodar   
+
+### Pré-requisitos   
+
+- **Java 11** ou superior instalado.
+- **Maven** para gerenciamento de dependências e construção do projeto.   
+
+## Rodando a aplicação   
+
+1. Clone o repositório:   
+
+```   
+git clone https://github.com/Gilvan-R-A/people-management-api.git
+```   
+
+2. Navegue até o diretório do projeto:   
+
+```   
+cd personapi
+```   
+
+3. Execute o comando Maven para rodar a aplicação:   
+
+```   
+mvn spring-boot:run
+```   
+
+4. A API estará disponível em **http://localhost:8080**   
+
+## Contribuição   
+
+Sinta-se à vontade para contribuir para este projeto! Abra uma issue ou envie um pull request para sugerir melhorias.
+
