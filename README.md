@@ -62,8 +62,8 @@ O **People Management API** permite que você interaja com um banco de dados de 
 
 ```   
 {
-    "firstName": "John",
-    "lastName": "Doe",
+    "firstName": "João",
+    "lastName": "Silva",
     "cpf": "12345678901",
     "birthDate": "1990-01-01",
     "phones": [
@@ -91,8 +91,8 @@ O **People Management API** permite que você interaja com um banco de dados de 
 [
     {
         "id": 1,
-        "firstName": "John",
-        "lastName": "Doe",
+        "firstName": "João",
+        "lastName": "Silva",
         "cpf": "12345678901",
         "birthDate": "1990-01-01",
         "phones": [
@@ -112,8 +112,8 @@ O **People Management API** permite que você interaja com um banco de dados de 
 ```   
 {
     "id": 1,
-    "firstName": "John",
-    "lastName": "Doe",
+    "firstName": "João",
+    "lastName": "Silva",
     "cpf": "12345678901",
     "birthDate": "1990-01-01",
     "phones": [
@@ -131,8 +131,8 @@ O **People Management API** permite que você interaja com um banco de dados de 
 
 ```   
 {
-    "firstName": "John",
-    "lastName": "Doe Updated",
+    "firstName": "João",
+    "lastName": "Silva Updated",
     "cpf": "12345678901",
     "birthDate": "1990-01-01",
     "phones": [
