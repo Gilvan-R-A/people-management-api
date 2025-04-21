@@ -9,6 +9,7 @@ import one.digitalInnovation.personapi.enums.PhoneType;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "phone")
 @Data
 @Builder
 @AllArgsConstructor
@@ -25,4 +26,8 @@ public class Phone {
 
     @Column(nullable = false)
     private String number;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 }
