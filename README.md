@@ -2,8 +2,26 @@
    People Management API
 </h1>
 
+Este projeto é uma API RESTful construída em **Java** com **Spring Boot** utilizando **JPA** para persistência de dados e **H2** para o banco de dados em memória. Ele permite gerenciar informações de pessoas realizando operações CRUD (criar, listar, atualizar e excluir) registros de pessoas, bem como realizar a busca por ID.   
 
-Este projeto é uma API RESTful desenvolvida em **Java** com **Spring Boot** para gerenciar informações de pessoas. Ele permite criar, listar, atualizar e excluir registros de pessoas, bem como realizar a busca por ID.   
+## Tecnologias Utilizadas   
+
+- **Java 11**: Linguagem de programação utilizada para o desenvolvimento da API.
+- **Spring Boot 2.7.1**: Framework utilizado para criação da API RESTful.
+- **H2 Database**: Banco de dados em memória utilizado para desenvolvimento e testes.
+- **Spring Data JPA**: Para interações com o banco de dados utilizando JPA (Java Persistence API).
+- **Lombok**: Biblioteca que reduz o boilerplate code (como getters, setters, constructors).
+- **MapStruct**: Biblioteca para mapeamento entre objetos (como DTOs e entidades).
+
+## Funcionalidades   
+
+- **Criar pessoa**: Permite adicionar uma nova pessoa ao banco de dados.
+- **Listar todas as pessoas**: Retorna uma lista de todas as pessoas registradas.
+- **Buscar por ID**: Permite buscar uma pessoa pelo seu ID.
+- **Atualizar pessoa**: Permite atualizar as informações de uma pessoa existente.
+- **Excluir pessoa**: Permite excluir uma pessoa do banco de dados.   
+
+
 
 ## Estrutura do Projeto   
 
@@ -42,136 +60,7 @@ personapi/
 ├── pom.xml               # Arquivo de configuração do Maven
 ```   
 
-## Descrição   
-
-O **People Management API** permite que você interaja com um banco de dados de pessoas, realizando operações CRUD (Criar, Ler, Atualizar, Deletar) . A aplicação é construída com o **Spring Boot**, utilizando **JPA** para persistência de dados e **H2** para o banco de dados em memória.   
-
-## Funcionalidades   
-
-- **Criar pessoa**: Permite adicionar uma nova pessoa ao banco de dados.
-- **Listar todas as pessoas**: Retorna uma lista de todas as pessoas registradas.
-- **Buscar por ID**: Permite buscar uma pessoa pelo seu ID.
-- **Atualizar pessoa**: Permite atualizar as informações de uma pessoa existente.
-- **Excluir pessoa**: Permite excluir uma pessoa do banco de dados.   
-
-## Endpoints   
-
-**1. Criar uma pessoa**   
-- **POST** /person   
-- Corpo da requisição:   
-
-```   
-{
-    "firstName": "João",
-    "lastName": "Silva",
-    "cpf": "12345678901",
-    "birthDate": "1990-01-01",
-    "phones": [
-        {
-            "type": "MOBILE",
-            "number": "987654321"
-        }
-    ]
-}
-```   
-
-- Resposta:   
-
-```   
-{
-    "message": "Created person with ID 1"
-}
-```   
-
-**2. Listar todas as pessoas   
-- **GET** /person   
-- Resposta:   
-
-```   
-[
-    {
-        "id": 1,
-        "firstName": "João",
-        "lastName": "Silva",
-        "cpf": "12345678901",
-        "birthDate": "1990-01-01",
-        "phones": [
-            {
-                "type": "MOBILE",
-                "number": "987654321"
-            }
-        ]
-    }
-]
-```   
-
-**3. Buscar pessoa por ID**   
-- **GET** /person/{id}   
-- Resposta:   
-
-```   
-{
-    "id": 1,
-    "firstName": "João",
-    "lastName": "Silva",
-    "cpf": "12345678901",
-    "birthDate": "1990-01-01",
-    "phones": [
-        {
-            "type": "MOBILE",
-            "number": "987654321"
-        }
-    ]
-}
-```   
-
-**4. Atualizar uma pessoa**   
-- **PUT** /person/{id}   
-- Corpo da requisição:   
-
-```   
-{
-    "firstName": "João",
-    "lastName": "Silva Updated",
-    "cpf": "12345678901",
-    "birthDate": "1990-01-01",
-    "phones": [
-        {
-            "type": "MOBILE",
-            "number": "987654322"
-        }
-    ]
-}
-```   
-- Resposta:   
-
-```   
-{
-    "message": "Updated person with ID 1"
-}
-```   
-
-**5. Excluir uma pessoa**   
-- **DELETE** /person/{id}   
-- Resposta:   
-
-```   
-{
-    "message": "Person with ID 1 deleted"
-}
-```   
-
-## Tecnologias Utilizadas   
-
-- **Java 11**: Linguagem de programação utilizada para o desenvolvimento da API.
-- **Spring Boot 2.7.1**: Framework utilizado para criação da API RESTful.
-- **H2 Database**: Banco de dados em memória utilizado para desenvolvimento e testes.
-- **Spring Data JPA**: Para interações com o banco de dados utilizando JPA (Java Persistence API).
-- **Lombok**: Biblioteca que reduz o boilerplate code (como getters, setters, constructors).
-- **MapStruct**: Biblioteca para mapeamento entre objetos (como DTOs e entidades).
-
-
-## Como Rodar   
+ ## Como Rodar   
 
 ### Pré-requisitos   
 
@@ -198,7 +87,124 @@ cd personapi
 mvn spring-boot:run
 ```   
 
-4. A API estará disponível em **http://localhost:8080**   
+4. A API estará disponível em **http://localhost:8080/api/v1/people**   
+
+## Testes   
+
+Você pode testar os endpoints por ferramentas como Postman e Insomnia.   
+Também pode interagir pelo H2 Database Console: http://localhost:8080/h2-console   
+
+- JDBC URL: jdbc:h2:mem:testdb
+- Usuário: sa
+- Senha: (em branco)
+
+
+## Endpoints   
+
+**1. Criar uma pessoa**   
+- **POST** /api/v1/people   
+- Corpo da requisição:   
+
+```   
+{
+    "firstName": "João",
+    "lastName": "Silva",
+    "cpf": "12345678901",
+    "birthDate": "1990-01-01",
+    "phones": [
+        {
+            "type": "MOBILE",
+            "number": "987654321"
+        }
+    ]
+}
+```   
+
+- Resposta:   
+
+```   
+{
+    "message": "Created person with ID 1"
+}
+```   
+
+**2. Listar todas as pessoas   
+- **GET** /api/v1/people   
+- Resposta:   
+
+```   
+[
+    {
+        "id": 1,
+        "firstName": "João",
+        "lastName": "Silva",
+        "cpf": "12345678901",
+        "birthDate": "1990-01-01",
+        "phones": [
+            {
+                "type": "MOBILE",
+                "number": "987654321"
+            }
+        ]
+    }
+]
+```   
+
+**3. Buscar pessoa por ID**   
+- **GET** /api/v1/people/{id}   
+- Resposta:   
+
+```   
+{
+    "id": 1,
+    "firstName": "João",
+    "lastName": "Silva",
+    "cpf": "12345678901",
+    "birthDate": "1990-01-01",
+    "phones": [
+        {
+            "type": "MOBILE",
+            "number": "987654321"
+        }
+    ]
+}
+```   
+
+**4. Atualizar uma pessoa**   
+- **PUT** /api/v1/people/{id}   
+- Corpo da requisição:   
+
+```   
+{
+    "firstName": "João",
+    "lastName": "Silva Updated",
+    "cpf": "12345678901",
+    "birthDate": "1990-01-01",
+    "phones": [
+        {
+            "type": "MOBILE",
+            "number": "987654322"
+        }
+    ]
+}
+```   
+- Resposta:   
+
+```   
+{
+    "message": "Updated person with ID 1"
+}
+```   
+
+**5. Excluir uma pessoa**   
+- **DELETE** /api/v1/people/{id}   
+- Resposta:   
+
+```   
+{
+    "message": "Person with ID 1 deleted"
+}
+```   
 
 ## Contribuição   
 
