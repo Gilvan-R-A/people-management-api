@@ -1,0 +1,8 @@
+services:
+  type: web
+  name: personapi
+  env: java
+  rootDir: personapi
+  buildCommand: mvn clean package
+  startCommand: java -jar target/personapi-0.0.1-SNAPSHOT.jar
+  plan: free
