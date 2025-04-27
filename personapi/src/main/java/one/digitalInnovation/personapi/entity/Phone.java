@@ -8,6 +8,8 @@ import one.digitalInnovation.personapi.enums.PhoneType;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "phone")
 @Data
@@ -29,5 +31,6 @@ public class Phone {
 
     @ManyToOne
     @JoinColumn(name = "person_id")
+    @JsonBackReference
     private Person person;
 }

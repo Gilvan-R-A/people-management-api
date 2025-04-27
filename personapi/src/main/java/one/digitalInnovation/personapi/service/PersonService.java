@@ -19,7 +19,8 @@ public class PersonService {
 
     private PersonRepository personRepository;
 
-    private final PersonMapper personMapper = PersonMapper.INSTANCE;
+    @Autowired
+    private PersonMapper personMapper;
 
     public MessageResponseDTO createPerson(PersonDTO personDTO){
         Person personToSave = personMapper.toModel(personDTO);
@@ -29,7 +30,7 @@ public class PersonService {
 
 
     public List<PersonDTO> listAll() {
-        List<Person> allPeople = personRepository.findAll();
+        List<Person> allPeople = personRepository.findAllWithPhones();
         return allPeople.stream()
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());
@@ -56,7 +57,7 @@ public class PersonService {
     }
 
     private Person verifyIfExists(Long id) throws PersonNotFoundException{
-        return personRepository.findById(id)
+        return personRepository.findByIdWithPhones(id)
                 .orElseThrow(()-> new PersonNotFoundException(id));
     }
 
