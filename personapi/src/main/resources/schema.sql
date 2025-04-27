@@ -12,5 +12,5 @@ CREATE TABLE phone (
     number VARCHAR(20),
     type VARCHAR(20),
     person_id BIGINT,
-    CONSTRAINT fk_person FOREIGN KEY (person_id) REFERENCES person(id)
+    CONSTRAINT fk_person FOREIGN KEY (person_id) REFERENCES person(id) ON DELETE CASCADE
 );
