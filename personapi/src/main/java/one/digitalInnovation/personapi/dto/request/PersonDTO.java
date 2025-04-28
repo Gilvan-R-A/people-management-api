@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -30,6 +32,7 @@ public class PersonDTO {
     @CPF
     private String cpf;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private String birthDate;
 
     @Valid
