@@ -10,7 +10,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -32,8 +35,9 @@ public class PersonDTO {
     @CPF
     private String cpf;
 
+    @NotNull(message = "Birth date is mandatory")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private String birthDate;
+    private LocalDate birthDate;
 
     @Valid
     @NotEmpty

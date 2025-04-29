@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import one.digitalInnovation.personapi.dto.request.PersonDTO;
 import one.digitalInnovation.personapi.dto.response.MessageResponseDTO;
 import one.digitalInnovation.personapi.entity.Person;
+import one.digitalInnovation.personapi.entity.Phone;
 import one.digitalInnovation.personapi.exception.PersonNotFoundException;
 import one.digitalInnovation.personapi.mapper.PersonMapper;
 import one.digitalInnovation.personapi.repository.PersonRepository;
+import one.digitalInnovation.personapi.repository.PhoneRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +20,25 @@ import java.util.stream.Collectors;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonService {
 
-    private PersonRepository personRepository;
-
-    @Autowired
-    private PersonMapper personMapper;
+    private final PersonRepository personRepository;
+    private final PhoneRepository phoneRepository;
+    private final PersonMapper personMapper;
 
     public MessageResponseDTO createPerson(PersonDTO personDTO){
         Person personToSave = personMapper.toModel(personDTO);
+
+        List<Phone> phones = personToSave.getPhones();
+        personToSave.setPhones(null);
+
         Person savedPerson = personRepository.save(personToSave);
+
+        if (phones != null && !phones.isEmpty()) {
+            for (Phone phone : phones) {
+                phone.setPerson(savedPerson);
+            }
+            phoneRepository.saveAll(phones);
+        }
+
         return createMessageResponse(savedPerson.getId(), "Created person with ID ");
     }
 
@@ -47,12 +61,24 @@ public class PersonService {
         personRepository.deleteById(id);
     }
 
-    public MessageResponseDTO updatById(Long id, PersonDTO personDTO) throws PersonNotFoundException {
-        verifyIfExists(id);
+    public MessageResponseDTO updateById(Long id, PersonDTO personDTO) throws PersonNotFoundException {
+        Person existingPerson = verifyIfExists(id);
 
         Person personToUpdate = personMapper.toModel(personDTO);
+        personToUpdate.setId(existingPerson.getId());
+
+        List<Phone> phones = personToUpdate.getPhones();
+        personToUpdate.setPhones(null);
 
         Person updatedPerson = personRepository.save(personToUpdate);
+
+        if (phones != null && !phones.isEmpty()) {
+            for (Phone phone : phones){
+                phone.setPerson(updatedPerson);
+            }
+            phoneRepository.saveAll(phones);
+        }
+
         return createMessageResponse(updatedPerson.getId(), "Updated person with ID");
     }
 

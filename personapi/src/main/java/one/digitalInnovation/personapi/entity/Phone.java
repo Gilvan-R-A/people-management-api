@@ -30,7 +30,7 @@ public class Phone {
     private String number;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "person_id", nullable = false)
     @JsonBackReference
     private Person person;
 }
