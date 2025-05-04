@@ -7,6 +7,7 @@ import one.digitalInnovation.personapi.entity.Person;
 import one.digitalInnovation.personapi.entity.Phone;
 import one.digitalInnovation.personapi.exception.PersonNotFoundException;
 import one.digitalInnovation.personapi.mapper.PersonMapper;
+import one.digitalInnovation.personapi.mapper.PhoneMapper;
 import one.digitalInnovation.personapi.repository.PersonRepository;
 import one.digitalInnovation.personapi.repository.PhoneRepository;
 
@@ -23,6 +24,7 @@ public class PersonService {
     private final PersonRepository personRepository;
     private final PhoneRepository phoneRepository;
     private final PersonMapper personMapper;
+    private final PhoneMapper phoneMapper;
 
     public MessageResponseDTO createPerson(PersonDTO personDTO){
         Person personToSave = personMapper.toModel(personDTO);
@@ -41,7 +43,6 @@ public class PersonService {
 
         return createMessageResponse(savedPerson.getId(), "Created person with ID ");
     }
-
 
     public List<PersonDTO> listAll() {
         List<Person> allPeople = personRepository.findAllWithPhones();
@@ -64,20 +65,25 @@ public class PersonService {
     public MessageResponseDTO updateById(Long id, PersonDTO personDTO) throws PersonNotFoundException {
         Person existingPerson = verifyIfExists(id);
 
-        Person personToUpdate = personMapper.toModel(personDTO);
-        personToUpdate.setId(existingPerson.getId());
+        existingPerson.setFirstName(personDTO.getFirstName());
+        existingPerson.setLastName(personDTO.getLastName());
+        existingPerson.setCpf(personDTO.getCpf());
+        existingPerson.setBirthDate(personDTO.getBirthDate());
 
-        List<Phone> phones = personToUpdate.getPhones();
-        personToUpdate.setPhones(null);
+        existingPerson.getPhones().clear();
+        if (personDTO.getPhones() != null) {
+            List<Phone> updatedPhones = personDTO.getPhones().stream()
+            .map(phoneDTO -> {
+                Phone phone = phoneMapper.toModel(phoneDTO);
+                phone.setPerson(existingPerson);
+                return phone;
+            })
+            .collect(Collectors.toList());
 
-        Person updatedPerson = personRepository.save(personToUpdate);
-
-        if (phones != null && !phones.isEmpty()) {
-            for (Phone phone : phones){
-                phone.setPerson(updatedPerson);
-            }
-            phoneRepository.saveAll(phones);
+            existingPerson.getPhones().addAll(updatedPhones);
         }
+
+        Person updatedPerson = personRepository.save(existingPerson);
 
         return createMessageResponse(updatedPerson.getId(), "Updated person with ID");
     }
