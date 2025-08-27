@@ -27,6 +27,7 @@ public class PersonService {
     private final PhoneMapper phoneMapper;
 
     public MessageResponseDTO createPerson(PersonDTO personDTO){
+        validateCpfUniqueness(personDTO.getCpf().trim(), null);
         Person personToSave = personMapper.toModel(personDTO);
 
         List<Phone> phones = personToSave.getPhones();
@@ -63,6 +64,9 @@ public class PersonService {
     }
 
     public MessageResponseDTO updateById(Long id, PersonDTO personDTO) throws PersonNotFoundException {
+
+        validateCpfUniqueness(personDTO.getCpf().trim(), id);
+
         Person existingPerson = verifyIfExists(id);
 
         existingPerson.setFirstName(personDTO.getFirstName());
@@ -99,4 +103,13 @@ public class PersonService {
                 .message(message + id)
                 .build();
     }
+
+    private void validateCpfUniqueness(String cpf, Long currentId) {
+        personRepository.findByCpf(cpf.trim()).ifPresent(existingPerson -> {
+            if (currentId == null || !existingPerson.getId().equals(currentId)) {
+                throw new RuntimeException("CPF already registered.");
+            }
+        });
+    }
+
 }

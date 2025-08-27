@@ -18,4 +18,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query("SELECT DISTINCT p FROM Person p LEFT JOIN FETCH p.phones")
     List<Person> findAllWithPhones();
 
+    Optional<Person> findByCpf(String cpf);
+
 }
