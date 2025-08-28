@@ -61,16 +61,17 @@ personapi/
 ├── Dockerfile            # Configurações Docker
 ├── docker-compose.yml    # Configurações Docker Compose
 ```   
+## Como rodar:
 
- ## Como Rodar (com Maven)  
+ Além de rodar localmente com Maven, você pode executar a API via Docker. 
+
+ ## Executando com Maven (Opção 1)  
 
 ### Pré-requisitos   
 
 - **Java 11** ou superior instalado.
 - **Maven** para gerenciamento de dependências e construção do projeto.   
-
-## Rodando a aplicação (Opção 1)  
-
+ 
 1. Clone o repositório:   
 
 ```   
@@ -92,8 +93,6 @@ mvn spring-boot:run
 4. A API estará disponível em **http://localhost:8080/api/v1/people**   
 
  ## Executando com Docker (Opção 2)   
-
- Além de rodar localmente com Maven, você pode executar a API via Docker.   
 
  ### Pré-requisitos   
 
