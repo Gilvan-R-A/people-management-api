@@ -58,16 +58,18 @@ personapi/
 │   │   ├── resources/    # Arquivos de configuração
 │   │   │   └── application.properties
 ├── pom.xml               # Arquivo de configuração do Maven
+├── Dockerfile            # Configurações Docker
+├── docker-compose.yml    # Configurações Docker Compose
 ```   
 
- ## Como Rodar   
+ ## Como Rodar (com Maven)  
 
 ### Pré-requisitos   
 
 - **Java 11** ou superior instalado.
 - **Maven** para gerenciamento de dependências e construção do projeto.   
 
-## Rodando a aplicação   
+## Rodando a aplicação (Opção 1)  
 
 1. Clone o repositório:   
 
@@ -88,6 +90,30 @@ mvn spring-boot:run
 ```   
 
 4. A API estará disponível em **http://localhost:8080/api/v1/people**   
+
+ ## Executando com Docker (Opção 2)   
+
+ Além de rodar localmente com Maven, você pode executar a API via Docker.   
+
+ ### Pré-requisitos   
+
+ - Docker e Docker Compose instalados.  
+
+ ```   
+ # Clone o repositório
+git clone https://github.com/Gilvan-R-A/people-management-api.git
+cd people-management-api/personapi
+
+# Build da imagem
+docker-compose build
+
+# Subir o container
+docker-compose up -d 
+
+# Parar o container
+docker-compose down
+```   
+A aplicação estará disponível em http://localhost:8080/api/v1/people   
 
 ## Testes   
 
